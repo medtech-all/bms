@@ -5,6 +5,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configuration } from './config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UserModule } from './common/modules/user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { JSendTransformInterceptor } from './common/interceptors/JSendTransform.interceptor';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 @Module({
   imports: [
@@ -18,7 +22,8 @@ import { UserModule } from './common/modules/user/user.module';
       }),
       inject: [ConfigService]
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

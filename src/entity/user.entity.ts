@@ -1,5 +1,5 @@
 import { Column, Unique, PrimaryGeneratedColumn, Entity } from "typeorm"
-import { IsOptional, IsEmail, IsNotEmpty, Max } from "class-validator"
+import { IsOptional, IsEmail, IsNotEmpty, MaxLength } from "class-validator"
 
 
 @Entity()
@@ -11,17 +11,17 @@ export class User {
 
     @Column()
     @IsNotEmpty()
-    @Max(50, { message: "Long firstName" })
+    @MaxLength(50)
     firstName: string
 
     @Column()
     @IsNotEmpty()
-    @Max(50, { message: "Long lastName" })
+    @MaxLength(50)
     lastName: string
 
     @Column()
     @IsNotEmpty()
-    @Max(50, { message: "Long username" })
+    @MaxLength(50)
     username: string
 
     @Column()
@@ -30,17 +30,17 @@ export class User {
 
     @Column()
     @IsNotEmpty()
-    @Max(20, { message: "Long bank number" })
+    @MaxLength(20)
     bankAccountNumber: string
 
     @Column()
     @IsNotEmpty()
-    @Max(12, { message: "Long phone number" })
+    @MaxLength(12)
     phoneNumber: string
 
     @Column()
     @IsOptional()
     @IsEmail()
-    @Max(50, { message: "Long email" })
+    @MaxLength(50)
     email?: string
 }

@@ -1,35 +1,41 @@
-import { IsOptional, IsEmail, IsNotEmpty, Max, IsString } from "class-validator"
+import { IsOptional, IsEmail, IsNotEmpty, MaxLength, IsString } from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
 
 export class UserDto {
 
     @IsNotEmpty()
-    @Max(50, { message: "Long firstName" })
+    @MaxLength(50)
     @ApiProperty()
     firstName: string
 
     @IsNotEmpty()
-    @Max(50, { message: "Long lastName" })
+    @MaxLength(50)
+    @ApiProperty()
     lastName: string
 
     @IsNotEmpty()
-    @Max(50, { message: "Long username" })
+    @MaxLength(50)
+    @ApiProperty()
     username: string
 
     @IsNotEmpty()
+    @ApiProperty()
     password: string
 
     @IsNotEmpty()
-    @Max(20, { message: "Long bank number" })
+    @MaxLength(20)
+    @ApiProperty()
     bankAccountNumber: string
 
     @IsNotEmpty()
-    @Max(12, { message: "Long phone number" })
+    @MaxLength(12)
+    @ApiProperty()
     phoneNumber: string
 
     @IsOptional()
     @IsEmail()
-    @Max(50, { message: "Long email" })
+    @MaxLength(50)
+    @ApiProperty()
     email?: string
 }
 

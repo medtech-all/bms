@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseFilters, BadRequestException } from '@nestjs/common';
 import { IUserService } from 'src/common/interfaces/user.service.interface';
 import { UserDto } from 'src/common/dto/user/create-user.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 
 @Controller('user')
 @ApiTags("User")
@@ -10,9 +11,9 @@ export class UserController {
         private readonly userService: IUserService
     ) { }
 
-    @ApiOperation({ summary: 'Create a new user' })
-    @ApiResponse({ status: 201, description: 'User created successfully' })
+
     @Post()
+    @ApiExcludeEndpoint()
     async createUser(@Body() createUserDto: UserDto) {
         return await this.userService.create({ ...createUserDto });
     }
