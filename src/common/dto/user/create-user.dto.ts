@@ -1,7 +1,7 @@
 import { IsOptional, IsEmail, IsNotEmpty, MaxLength, IsString } from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
 
-export class UserDto {
+export class CreateUserDto {
 
     @IsNotEmpty()
     @MaxLength(50)
