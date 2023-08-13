@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, UseFilters, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseFilters, BadRequestException, UseInterceptors } from '@nestjs/common';
 import { IUserService } from 'src/common/interfaces/user.service.interface';
 import { UserDto } from 'src/common/dto/user/create-user.dto';
-import { ApiOperation, ApiResponse, ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
-import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
+import { ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
+import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransform.interceptor';
 
 @Controller('user')
 @ApiTags("User")
@@ -19,7 +19,8 @@ export class UserController {
     }
 
     @Get()
+    @UseInterceptors(JSendTransformInterceptor)
     async getUsers() {
-        return await this.userService.find()
+        return { data: await this.userService.find(), status: "success", message: "value prepared" }
     }
 }

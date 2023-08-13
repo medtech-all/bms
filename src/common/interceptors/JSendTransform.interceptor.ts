@@ -1,3 +1,5 @@
+// jsend-transform.interceptor.ts
+
 import {
     Injectable,
     NestInterceptor,
@@ -20,15 +22,17 @@ export class JSendTransformInterceptor<T>
     intercept(
         context: ExecutionContext,
         next: CallHandler,
-        customStatus: 'success' | 'fail' | 'error' = 'success', // Default to 'success'
+        customStatus: 'success' | 'fail' | 'error' = 'success',
+        customStatusCode?: number,
+        customMessage?: string,
     ): Observable<JSendResponse<T>> {
         return next.handle().pipe(
             map((data) => ({
-                statusCode: context.switchToHttp().getResponse().statusCode,
-                status: customStatus,
-                data: data,
+                statusCode: customStatusCode || context.switchToHttp().getResponse().statusCode,
+                status: data.status,
+                message: data.message,
+                data: data.data,
             })),
         );
     }
 }
-
