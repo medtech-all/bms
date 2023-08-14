@@ -7,22 +7,25 @@ import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransfor
 import { SerializeInterceptor } from 'src/common/interceptors/serializer.interceptor';
 import { UserDto } from 'src/common/dto/user/user.dto';
 import { UseInterceptors } from '@nestjs/common/decorators';
+import { IUserService } from 'src/common/interfaces/user.service.interface';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 @ApiTags("Auth")
 export class AuthController {
-    constructor(private readonly userService: UserService
+    constructor(private readonly authService: AuthService
         , private readonly hashingService: HashingService
     ) { }
 
     @Post('register')
     @ApiOperation({ summary: 'Create a new user' })
-    @ApiResponse({ status: 201, description: 'User created successfully' })
-    @ApiResponse({ status: 400, description: 'Bad Request' })
     @UseInterceptors(new SerializeInterceptor(UserDto))
     @UseInterceptors(JSendTransformInterceptor)
     async register(@Body() createUserDto: CreateUserDto) {
-        let hashedPassword = await this.hashingService.hashPassword(createUserDto.password, 10)
-        return { data: await this.userService.create({ ...createUserDto, password: hashedPassword }), status: "success", message: "Inserted" }
+        let user = await this.authService.register(createUserDto)
+        if (!user) {
+            return { data: null, status: "Bad Request", message: "Username or email is already taken" }
+        }
+        return { data: user, status: "success", message: "Inserted" }
     }
 }

@@ -20,4 +20,12 @@ export class UserService implements IUserService {
     async find(): Promise<User[]> {
         return await this.userRepo.find()
     }
+
+    async findOne(userId: string): Promise<User> {
+        return await this.userRepo.findOne({ where: { userId } })
+    }
+
+    async findByUsernameAndEmail(email: string = undefined, username: string = undefined): Promise<User> {
+        return await this.userRepo.findOneBy({ email, username })
+    }
 }
