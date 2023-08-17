@@ -3,11 +3,11 @@ import * as bcrypt from 'bcrypt'
 
 export class HashingService {
 
-    async hashPassword(password: string, saltRounds: number = 10): Promise<string> {
+    async hashPassword(password: string, saltRounds: number): Promise<string> {
         return bcrypt.hash(password, saltRounds);
     }
 
     async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
-        return bcrypt.compare(password, hashedPassword);
+        return await bcrypt.compare(password, hashedPassword);
     }
 }

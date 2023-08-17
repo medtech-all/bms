@@ -28,4 +28,8 @@ export class UserService implements IUserService {
     async findByUsernameAndEmail(email: string = undefined, username: string = undefined): Promise<User> {
         return await this.userRepo.findOneBy({ email, username })
     }
+
+    async findByUsername(username: string) {
+        return await this.userRepo.findOneBy({ username })
+    }
 }

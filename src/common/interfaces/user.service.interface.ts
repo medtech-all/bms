@@ -7,4 +7,6 @@ export class IUserService {
     findOne(userId: string): any { }
 
     findByUsernameAndEmail(email: string = undefined, username: string = undefined): any { }
+
+    findByUsername(username: string): any { }
 }

@@ -1,20 +1,16 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseInterceptors, Session } from '@nestjs/common';
 import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
-import { UserService } from 'src/common/providers/user/user.service';
-import { HashingService } from './hashing.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransform.interceptor';
 import { SerializeInterceptor } from 'src/common/interceptors/serializer.interceptor';
 import { UserDto } from 'src/common/dto/user/user.dto';
-import { UseInterceptors } from '@nestjs/common/decorators';
-import { IUserService } from 'src/common/interfaces/user.service.interface';
 import { AuthService } from './auth.service';
+import { LoginDto } from 'src/common/dto/user/login.dto';
 
 @Controller('auth')
 @ApiTags("Auth")
 export class AuthController {
     constructor(private readonly authService: AuthService
-        , private readonly hashingService: HashingService
     ) { }
 
     @Post('register')
@@ -28,4 +24,16 @@ export class AuthController {
         }
         return { data: user, status: "success", message: "Inserted" }
     }
+
+    @Post("login")
+    async login(@Body() loginDto: LoginDto,
+        @Session() session: any
+    ) {
+        let user = await this.authService.login(loginDto.username, loginDto.password)
+        if (user.data) {
+            session.userId = user.data.UserId
+        }
+        return user
+    }
+
 }
