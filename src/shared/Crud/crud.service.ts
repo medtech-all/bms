@@ -1,12 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, Entity, Repository } from "typeorm";
-
+import { DeepPartial, Repository } from "typeorm";
+import { User } from "src/entity/user.entity";
+import { UserRepository } from "src/common/repositories/user.repository";
 @Injectable()
 export class CrudService<T> {
     constructor(
-        @InjectRepository(Entity)
-        private readonly repository: Repository<T>
+        @InjectRepository(UserRepository)
+        private readonly repository: Repository<T>,
     ) { }
 
     async findAll(): Promise<T[]> {
@@ -22,7 +23,7 @@ export class CrudService<T> {
         return this.repository.save(entity);
     }
 
-    async update(id: any, data: Partial<any>): Promise<any | undefined> {
+    async update(id: any, data: Partial<any>): Promise<T | undefined> {
         await this.repository.update(id, data);
         return this.findOneById(id);
     }

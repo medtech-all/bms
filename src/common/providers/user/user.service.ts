@@ -18,6 +18,8 @@ export class UserService implements IUserService {
         return await this.userRepo.save(user)
     }
     async find(): Promise<User[]> {
+        console.log(this.userRepo);
+
         return await this.userRepo.find()
     }
 

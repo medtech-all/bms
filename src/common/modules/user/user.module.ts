@@ -9,14 +9,19 @@ import { CrudService } from 'src/shared/Crud/crud.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User, UserRepository]), // Include UserRepository here
+        TypeOrmModule.forFeature([User, UserRepository]),
     ],
     controllers: [UserController],
     providers: [
         UserService,
         { provide: IUserService, useClass: UserService },
-        { provide: CrudService, useFactory: (repository) => new CrudService<User>(repository), inject: [UserRepository] },
-    ],
-    exports: [UserService, IUserService],
+        {
+            provide: CrudService,
+            useFactory: (repository: UserRepository) => {
+                return new CrudService<User>(repository);
+            },
+            inject: [UserRepository],
+        },],
+    exports: [UserService, IUserService, CrudService],
 })
 export class UserModule { }
