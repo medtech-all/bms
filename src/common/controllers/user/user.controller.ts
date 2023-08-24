@@ -5,15 +5,14 @@ import { ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
 import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransform.interceptor';
 import { SerializeInterceptor } from 'src/common/interceptors/serializer.interceptor';
 import { UserDto } from 'src/common/dto/user/user.dto';
-import { CrudService } from 'src/shared/Crud/crud.service';
 import { User } from 'src/entity/user.entity';
+import { UserService } from 'src/common/providers/user/user.service';
 
 @Controller('user')
 @ApiTags("User")
 export class UserController {
     constructor(
-        private readonly userService: IUserService,
-        private readonly crudService: CrudService<User>
+        private readonly userService: UserService,
     ) { }
 
 

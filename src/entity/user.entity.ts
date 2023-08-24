@@ -1,11 +1,11 @@
 import { Column, Unique, PrimaryGeneratedColumn, Entity } from "typeorm"
 import { IsOptional, IsEmail, IsNotEmpty, MaxLength } from "class-validator"
-
+import { BaseEntity } from "src/shared/Crud/entity/base.entity"
 
 @Entity()
 @Unique(['username', 'email']) // Define the unique constraint
 
-export class User {
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     userId: string
 

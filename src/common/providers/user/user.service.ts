@@ -4,23 +4,21 @@ import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
 import { InjectRepository } from "@nestjs/typeorm"
 import { User } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
+import { UserRepository } from 'src/common/repositories/user.repository';
+import { BaseService } from 'src/shared/Crud/service/base.service';
 
 @Injectable()
-export class UserService implements IUserService {
+export class UserService extends BaseService<User> {
 
     constructor(
-        @InjectRepository(User)
-        private readonly userRepo: Repository<User>) {
+        private readonly userRepo: UserRepository
+    ) {
+        super(userRepo);
     }
 
     async create(createUserDto: CreateUserDto): Promise<User> {
-        let user = this.userRepo.create({ ...createUserDto })
+        let user = await this.userRepo.create({ ...createUserDto })
         return await this.userRepo.save(user)
-    }
-    async find(): Promise<User[]> {
-        console.log(this.userRepo);
-
-        return await this.userRepo.find()
     }
 
     async findOne(userId: string): Promise<User> {
@@ -28,10 +26,14 @@ export class UserService implements IUserService {
     }
 
     async findByUsernameAndEmail(email: string = undefined, username: string = undefined): Promise<User> {
-        return await this.userRepo.findOneBy({ email, username })
+        return await this.userRepo.findOne({ email, username })
     }
 
     async findByUsername(username: string) {
-        return await this.userRepo.findOneBy({ username })
+        return await this.userRepo.findOne({ username })
+    }
+
+    async find(): Promise<User[]> {
+        return await super.findAll()
     }
 }

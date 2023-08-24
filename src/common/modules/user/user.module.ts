@@ -5,7 +5,7 @@ import { IUserService } from 'src/common/interfaces/user.service.interface';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { UserRepository } from 'src/common/repositories/user.repository';
-import { CrudService } from 'src/shared/Crud/crud.service';
+import { IRepository } from 'src/shared/Crud/repository/base.repository.interface';
 
 @Module({
     imports: [
@@ -14,14 +14,8 @@ import { CrudService } from 'src/shared/Crud/crud.service';
     controllers: [UserController],
     providers: [
         UserService,
-        { provide: IUserService, useClass: UserService },
-        {
-            provide: CrudService,
-            useFactory: (repository: UserRepository) => {
-                return new CrudService<User>(repository);
-            },
-            inject: [UserRepository],
-        },],
-    exports: [UserService, IUserService, CrudService],
+        UserRepository
+    ],
+    exports: [UserService],
 })
 export class UserModule { }
