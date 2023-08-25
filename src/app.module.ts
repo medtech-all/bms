@@ -23,7 +23,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
       inject: [ConfigService]
     }),
     UserModule,
-    // AuthModule
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -3,13 +3,15 @@ import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
 import { User } from 'src/entity/user.entity';
 import { HashingService } from './hashing.service';
 import { IUserService } from 'src/common/interfaces/user.service.interface';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly userService: IUserService,
         private readonly hashingService: HashingService,
-    ) { }
+    ) {
+    }
 
     async register(createUserDto: CreateUserDto) {
         let user = await this.userExists(createUserDto.email, createUserDto.username)
