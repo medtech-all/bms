@@ -1,6 +1,7 @@
-import { Column, Unique, PrimaryGeneratedColumn, Entity } from "typeorm"
+import { Column, Unique, PrimaryGeneratedColumn, Entity, OneToMany } from "typeorm"
 import { IsOptional, IsEmail, IsNotEmpty, MaxLength } from "class-validator"
 import { BaseEntity } from "src/shared/Crud/entity/base.entity"
+import { UserBuilding } from "./userBuilding.entity"
 
 @Entity()
 @Unique(['username', 'email']) // Define the unique constraint
@@ -43,4 +44,8 @@ export class User extends BaseEntity {
     @IsEmail()
     @MaxLength(50)
     email?: string
+
+    // @OneToMany(type => UserBuilding, userBuilding => userBuilding.userId)
+    // userBuildings: UserBuilding
+
 }
