@@ -1,14 +1,10 @@
-import { User } from "src/entity/user.entity";
-import { IService } from "src/shared/Crud/interface/base.service.interface";
-export interface IUserService extends IService<User> {
+import { CreateUserDto } from '../dto/user/create-user.dto';
+import { User } from '../../entity/user.entity';
 
-    create(user: any): any;
-
-    find(): any;
-
-    findOne(userId: string): any;
-
-    findByUsernameAndEmail(email: string, username: string): any;
-
-    findByUsername(username: string): any;
+export interface IUserService {
+    create(user: CreateUserDto): Promise<User>;
+    find(): Promise<User[]>;
+    findOne(userId: string): Promise<User | undefined>;
+    findByUsernameAndEmail(email: string, username: string): Promise<User | undefined>;
+    findByUsername(username: string): Promise<User | undefined>;
 }

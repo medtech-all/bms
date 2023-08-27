@@ -8,7 +8,7 @@ import { UserRepository } from 'src/common/repositories/user.repository';
 import { BaseService } from 'src/shared/Crud/service/base.service';
 
 @Injectable()
-export class UserService extends BaseService<User> {
+export class UserService extends BaseService<User> implements IUserService {
 
     constructor(
         private readonly userRepo: UserRepository
