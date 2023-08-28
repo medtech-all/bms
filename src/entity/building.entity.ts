@@ -2,7 +2,7 @@ import { Column, Unique, PrimaryGeneratedColumn, Entity, ManyToMany, ManyToOne, 
 import { IsOptional, IsEmail, IsNotEmpty, MaxLength, Max } from "class-validator"
 import { BaseEntity } from "src/shared/Crud/entity/base.entity"
 import { type } from "os"
-import { UserBuilding } from "./userBuilding.entity"
+import { User } from "./user.entity"
 
 @Entity()
 @Unique(["buildingId"])
@@ -27,9 +27,13 @@ export class Building extends BaseEntity {
 
     @Column()
     @IsNotEmpty()
+    managerId: string
+
+    @Column()
+    @IsNotEmpty()
     createdBy: string
 
+    @ManyToOne(() => User, (user) => user.buildings)
+    user: User;
 
-    @OneToMany(type => UserBuilding, userBuilding => userBuilding.buildingId)
-    userBuildings: UserBuilding
 }

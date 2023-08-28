@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { JSendTransformInterceptor } from './common/interceptors/JSendTransform.interceptor';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { BuildingModule } from './common/modules/building/building.module';
+import { UnitModule } from './common/modules/unit/unit.module';
 
 @Module({
   imports: [
@@ -23,7 +25,9 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
       inject: [ConfigService]
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    BuildingModule,
+    UnitModule
   ],
   controllers: [AppController],
   providers: [AppService],
