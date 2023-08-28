@@ -1,7 +1,8 @@
-import { Column, Unique, PrimaryGeneratedColumn, Entity, OneToMany, ManyToMany } from "typeorm"
+import { Column, Unique, PrimaryGeneratedColumn, Entity, OneToMany, ManyToMany, OneToOne } from "typeorm"
 import { IsOptional, IsEmail, IsNotEmpty, MaxLength } from "class-validator"
 import { BaseEntity } from "src/shared/Crud/entity/base.entity"
 import { User } from "./user.entity"
+import { UnitDetails } from "./unit-details.entity"
 
 
 @Entity()
@@ -32,4 +33,7 @@ export class Unit extends BaseEntity {
 
     @ManyToMany(() => User, (user) => user.units)
     user: User
+
+    @OneToOne(() => UnitDetails, unitDetails => unitDetails.unitId)
+    unitDetails: UnitDetails
 }
