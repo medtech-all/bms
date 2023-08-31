@@ -5,7 +5,6 @@ import { ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
 import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransform.interceptor';
 import { SerializeInterceptor } from 'src/common/interceptors/serializer.interceptor';
 import { UserDto } from 'src/common/dto/user/user.dto';
-import { User } from 'src/entity/user.entity';
 import { UserService } from 'src/common/providers/user/user.service';
 
 @Controller('user')

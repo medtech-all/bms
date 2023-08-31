@@ -34,6 +34,6 @@ export class Building extends BaseEntity {
     createdBy: string
 
     @ManyToOne(() => User, (user) => user.buildings)
-    user: User;
+    manager: User;
 
 }
