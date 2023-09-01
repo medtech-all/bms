@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransform.interceptor';
 import { BuildingService } from 'src/common/providers/building/building.service';
 import { createBuildingDto } from 'src/common/dto/building/create-building.dto';
+import { ApiParam } from '@nestjs/swagger';
 
 @Controller('building')
 @ApiTags("Building")
@@ -23,8 +24,9 @@ export class BuildingController {
     }
 
     @Get("/:buildingId")
+    @ApiParam({ name: "identifier", required: true })
     @UseInterceptors(JSendTransformInterceptor)
-    async getBuildingById(@Param() buildingId: string) {
+    async getBuildingById(@Param("buildingId") buildingId: string) {
         return { data: await this.buildingService.findById(buildingId), status: "success", message: "value prepared" }
     }
 

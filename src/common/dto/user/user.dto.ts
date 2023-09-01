@@ -2,7 +2,7 @@ import { Expose, Exclude } from "class-transformer"
 
 export class UserDto {
     @Expose()
-    userId: string
+    id: string
     @Expose()
     firstName: string
     @Expose()

@@ -22,7 +22,7 @@ export class UserService extends BaseService<User> implements IUserService {
     }
 
     async findOne(userId: string): Promise<User> {
-        return await this.userRepo.findOne({ where: { userId } })
+        return await super.findById(userId)
     }
 
     async findByUsernameAndEmail(email: string = undefined, username: string = undefined): Promise<User> {

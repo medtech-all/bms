@@ -9,12 +9,12 @@ export abstract class BaseRepository<T extends BaseEntity> {
         return this.repository.find();
     }
 
-    async findById(id: any): Promise<T> {
-        return this.repository.findOne(id);
+    async findById(id: string): Promise<T> {
+        return this.repository.findOneById(id);
     }
 
-    async create(data: Partial<T>): Promise<T> {
-        const entity = this.repository.create();
+    async create(data: DeepPartial<T>): Promise<T> {
+        const entity = this.repository.create(data);
         return this.repository.save(entity);
     }
 

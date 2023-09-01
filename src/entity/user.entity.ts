@@ -9,7 +9,7 @@ import { Unit } from "./unit.entity"
 
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    userId: string
+    id: string
 
     @Column()
     @IsNotEmpty()

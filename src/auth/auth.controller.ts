@@ -31,7 +31,8 @@ export class AuthController {
     ) {
         let user = await this.authService.login(loginDto.username, loginDto.password)
         if (user.data) {
-            session.userId = user.data.userId
+            session.userId = user.data.id
+            session.username = user.data.username
         }
         return user
     }

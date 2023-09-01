@@ -12,6 +12,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { BuildingModule } from './common/modules/building/building.module';
 import { UnitModule } from './common/modules/unit/unit.module';
 import { UnitDetailsModule } from './common/modules/unit-details/unit-details.module';
+import { CurrentUserInterceptor } from './common/interceptors/user/current-user.interceptor';
 
 @Module({
   imports: [
@@ -32,6 +33,11 @@ import { UnitDetailsModule } from './common/modules/unit-details/unit-details.mo
     UnitDetailsModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CurrentUserInterceptor
+    }
+  ],
 })
 export class AppModule { }
