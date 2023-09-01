@@ -37,4 +37,10 @@ export class AuthController {
         return user
     }
 
+    @Post("logout")
+    @ApiOperation({ summary: "User logout" })
+    async logout(@Session() session: any) {
+        session.userId = null
+    }
+
 }

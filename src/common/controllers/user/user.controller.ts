@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseFilters, BadRequestException, UseInterceptors, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, BadRequestException, UseInterceptors, Session } from '@nestjs/common';
 import { IUserService } from 'src/common/interfaces/user.service.interface';
 import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
 import { ApiTags, ApiExcludeEndpoint } from '@nestjs/swagger';
@@ -8,6 +8,7 @@ import { UserDto } from 'src/common/dto/user/user.dto';
 import { UserService } from 'src/common/providers/user/user.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { User } from 'src/entity/user.entity';
+import { AuthGuard } from 'src/common/gurads/auth.guard';
 
 @Controller('user')
 @ApiTags("User")
@@ -26,6 +27,7 @@ export class UserController {
     @Get()
     @UseInterceptors(new SerializeInterceptor(UserDto))
     @UseInterceptors(JSendTransformInterceptor)
+    @UseGuards(AuthGuard)
     async getUsers(
         @Session() session: any,
         @CurrentUser() currentUser: User
