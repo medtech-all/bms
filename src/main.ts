@@ -11,6 +11,7 @@ async function bootstrap() {
   }))
   app.useGlobalPipes(new ValidationPipe())
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Noora Building Management System')
     .setDescription('API documents')
     .setVersion('1.0')

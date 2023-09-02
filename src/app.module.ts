@@ -7,12 +7,13 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UserModule } from './common/modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JSendTransformInterceptor } from './common/interceptors/JSendTransform.interceptor';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { BuildingModule } from './common/modules/building/building.module';
 import { UnitModule } from './common/modules/unit/unit.module';
 import { UnitDetailsModule } from './common/modules/unit-details/unit-details.module';
 import { CurrentUserInterceptor } from './common/interceptors/user/current-user.interceptor';
+import { AuthGuard } from './common/gurads/auth.guard';
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { CurrentUserInterceptor } from './common/interceptors/user/current-user.
     AuthModule,
     BuildingModule,
     UnitModule,
-    UnitDetailsModule
+    UnitDetailsModule,
   ],
   controllers: [AppController],
   providers: [AppService,
