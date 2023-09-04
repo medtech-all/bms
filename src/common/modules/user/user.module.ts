@@ -7,9 +7,11 @@ import { User } from 'src/entity/user.entity';
 import { UserRepository } from 'src/common/repositories/user.repository';
 import { IRepository } from 'src/shared/Crud/repository/base.repository.interface';
 import { CurrentUserInterceptor } from 'src/common/interceptors/user/current-user.interceptor';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
+        JwtModule,
         TypeOrmModule.forFeature([User, UserRepository]),
     ],
     controllers: [UserController],

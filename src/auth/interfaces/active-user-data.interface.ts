@@ -1,8 +1,6 @@
 export interface ActiveUserData {
     id: string;
-    phoneNo: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    fullName: string;
-    groups: string[];
-    type: string;
 }

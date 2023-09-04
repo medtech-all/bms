@@ -8,7 +8,7 @@ import { UserDto } from 'src/common/dto/user/user.dto';
 import { UserService } from 'src/common/providers/user/user.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { User } from 'src/entity/user.entity';
-
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @ApiBearerAuth()
 @Controller('user')
@@ -26,12 +26,12 @@ export class UserController {
     }
 
     @Get()
+    @UseGuards(AuthGuard)
     @UseInterceptors(new SerializeInterceptor(UserDto))
-    @UseInterceptors(JSendTransformInterceptor)
     async getUsers(
         @Session() session: any,
         @CurrentUser() currentUser: User
     ) {
-        return { data: await this.userService.find(), status: "success", message: "value prepared" }
+        return await this.userService.find()
     }
 }

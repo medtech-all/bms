@@ -49,6 +49,7 @@ export class AuthService {
         if (!user) {
             return { data: null, status: "failed", message: "Unauthorized" }
         }
+
         let token = await this.generateTokens(user)
         return token
     }
@@ -101,6 +102,8 @@ export class AuthService {
                 this.jwtConfiguration.accessTokenExpireIn,
                 {
                     email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                 },
             ),
             this.signToken(user.id, this.jwtConfiguration.refreshTokenExpireIn, {
