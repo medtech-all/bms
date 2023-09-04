@@ -6,13 +6,11 @@ import { SerializeInterceptor } from 'src/common/interceptors/serializer.interce
 import { UserDto } from 'src/common/dto/user/user.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from 'src/common/dto/user/login.dto';
-import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 @ApiTags("Auth")
 export class AuthController {
     constructor(private readonly authService: AuthService,
-        private readonly jwtService: JwtService
     ) { }
 
     @Post('register')
@@ -31,14 +29,11 @@ export class AuthController {
     async login(@Body() loginDto: LoginDto,
         @Session() session: any
     ) {
-        let user = await this.authService.login(loginDto.username, loginDto.password)
-        if (!user.data) {
+        let result = await this.authService.login(loginDto.username, loginDto.password)
+        if (!result) {
             return { data: null, status: "failed", message: "unauthorized" }
         }
-        let payload = { username: user.data.username, id: user.data.id }
-        session.userId = user.data.id
-        session.username = user.data.username
-        return { access_token: await this.jwtService.signAsync(payload) }
+        return result
     }
 
     @Post("logout")

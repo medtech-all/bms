@@ -13,7 +13,6 @@ import { BuildingModule } from './common/modules/building/building.module';
 import { UnitModule } from './common/modules/unit/unit.module';
 import { UnitDetailsModule } from './common/modules/unit-details/unit-details.module';
 import { CurrentUserInterceptor } from './common/interceptors/user/current-user.interceptor';
-import { AuthGuard } from './common/gurads/auth.guard';
 
 @Module({
   imports: [

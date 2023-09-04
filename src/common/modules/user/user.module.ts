@@ -18,6 +18,6 @@ import { CurrentUserInterceptor } from 'src/common/interceptors/user/current-use
         UserRepository,
         CurrentUserInterceptor
     ],
-    exports: [UserService],
+    exports: [UserService, UserRepository],
 })
 export class UserModule { }
