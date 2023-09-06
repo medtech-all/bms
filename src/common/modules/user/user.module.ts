@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserController } from 'src/common/controllers/user/user.controller';
 import { UserService } from 'src/common/providers/user/user.service';
-import { IUserService } from 'src/common/interfaces/user.service.interface';
+import { IUserService } from 'src/common/interfaces/service/user.service.interface';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { UserRepository } from 'src/common/repositories/user.repository';
@@ -18,8 +18,9 @@ import { JwtModule } from '@nestjs/jwt';
     providers: [
         UserService,
         UserRepository,
-        CurrentUserInterceptor
+        CurrentUserInterceptor,
+        { provide: "IUserService", useClass: UserService }
     ],
-    exports: [UserService, UserRepository],
+    exports: [UserService, UserRepository, "IUserService"],
 })
 export class UserModule { }

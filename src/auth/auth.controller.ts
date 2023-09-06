@@ -30,7 +30,7 @@ export class AuthController {
         @Session() session: any
     ) {
         let token = await this.authService.login(loginDto.username, loginDto.password)
-
+        session.token = token
         return new CustomResponse(
             HttpStatus.OK,
             CustomMessages.LOGIN_SUCCESSFULLY,

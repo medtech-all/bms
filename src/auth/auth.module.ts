@@ -3,7 +3,7 @@ import { HashingService } from './hashing.service';
 import { AuthController } from './auth.controller';
 import { UserModule } from 'src/common/modules/user/user.module';
 import { AuthService } from './auth.service';
-import { IUserService } from 'src/common/interfaces/user.service.interface';
+import { IUserService } from 'src/common/interfaces/service/user.service.interface';
 import { UserService } from 'src/common/providers/user/user.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';

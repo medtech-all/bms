@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IUserService } from 'src/common/interfaces/user.service.interface';
+import { IUserService } from 'src/common/interfaces/service/user.service.interface';
 import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
 import { InjectRepository } from "@nestjs/typeorm"
 import { User } from 'src/entity/user.entity';
@@ -33,7 +33,7 @@ export class UserService extends BaseService<User> implements IUserService {
         return await this.userRepo.findOne({ username })
     }
 
-    async find(): Promise<User[]> {
+    async findAll(): Promise<User[]> {
         return await super.findAll()
     }
 }

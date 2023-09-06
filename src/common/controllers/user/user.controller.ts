@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, UseGuards, BadRequestException, UseInterceptors, Session } from '@nestjs/common';
-import { IUserService } from 'src/common/interfaces/user.service.interface';
+import { Controller, Get, Post, Body, UseGuards, BadRequestException, UseInterceptors, Session, Inject } from '@nestjs/common';
+import { IUserService } from 'src/common/interfaces/service/user.service.interface';
 import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
 import { ApiTags, ApiExcludeEndpoint, ApiBearerAuth } from '@nestjs/swagger';
 import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransform.interceptor';
@@ -15,7 +15,8 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 @ApiTags("User")
 export class UserController {
     constructor(
-        private readonly userService: UserService,
+        @Inject("IUserService")
+        private readonly userService: IUserService,
     ) { }
 
 
@@ -32,6 +33,6 @@ export class UserController {
         @Session() session: any,
         @CurrentUser() currentUser: User
     ) {
-        return await this.userService.find()
+        return await this.userService.findAll()
     }
 }
