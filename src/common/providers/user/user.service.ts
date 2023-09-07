@@ -39,7 +39,7 @@ export class UserService extends BaseService<User> implements IUserService {
         return await super.findOne({ username })
     }
 
-    async findAll(): Promise<User[]> {
-        return await super.findAll()
+    async find(): Promise<User[]> {
+        return await super.find()
     }
 }

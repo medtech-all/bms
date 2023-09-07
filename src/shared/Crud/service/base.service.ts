@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 export abstract class BaseService<T extends BaseEntity> {
     constructor(private readonly repository: IRepository<T>) { }
 
-    async findAll(): Promise<T[]> {
+    async find(): Promise<T[]> {
         return this.repository.find();
     }
 

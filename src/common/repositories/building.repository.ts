@@ -5,8 +5,9 @@ import { IRepository } from 'src/shared/Crud/repository/base.repository.interfac
 import { InjectRepository } from '@nestjs/typeorm';
 import { Building } from 'src/entity/building.entity';
 import { IBuildingRepository } from '../interfaces/repository/building.repository.interface';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
+@Injectable()
 export class BuildingRepository extends BaseRepository<Building> implements IBuildingRepository {
     constructor(
         @InjectRepository(Building)

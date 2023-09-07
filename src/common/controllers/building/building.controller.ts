@@ -14,7 +14,7 @@ export class BuildingController {
     @Get()
     @UseInterceptors(JSendTransformInterceptor)
     async getBuildings(@Query() query: string) {
-        return { data: await this.buildingService.findAll(), status: "success", message: "value prepared" }
+        return { data: await this.buildingService.find(), status: "success", message: "value prepared" }
     }
 
     @Post()

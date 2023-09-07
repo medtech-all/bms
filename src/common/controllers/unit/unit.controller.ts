@@ -11,37 +11,21 @@ import { User } from 'src/entity/user.entity';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import CustomResponse from 'src/common/providers/custom-response/custom-response.service';
 import { CustomMessages } from 'src/common/constants/custom-messages';
+import { IUnitService } from 'src/common/interfaces/service/unit.service.interface';
 
+@Controller('unit')
 @ApiBearerAuth()
-@Controller('user')
-@ApiTags("User")
-export class UserController {
+@ApiTags("Unit")
+export class UnitController {
+
     constructor(
-        @Inject("IUserService")
-        private readonly userService: IUserService,
-    ) { }
+        @Inject("IUnitService")
+        private readonly unitService: IUnitService) { }
 
 
-    @Post()
-    @ApiExcludeEndpoint()
-    async createUser(@Body() createUserDto: CreateUserDto) {
-        return await this.userService.create({ ...createUserDto });
-    }
-
+    @UseGuards(AuthGuard)
     @Get()
-    @UseGuards(AuthGuard)
-    @UseInterceptors(new SerializeInterceptor(UserDto))
-    async getUsers(
-        @Session() session: any,
-        @CurrentUser() currentUser: User
-    ) {
-        return new CustomResponse(HttpStatus.OK, CustomMessages.VALUE_PREPARED, await this.userService.find());
-    }
-
-    @Post("/:userId")
-    @UseGuards(AuthGuard)
-    @UseInterceptors(new SerializeInterceptor(UserDto))
-    async getUser(@Param("userId") userId: string) {
-        return new CustomResponse(HttpStatus.OK, CustomMessages.VALUE_PREPARED, await this.userService.findById(userId));
+    async getUnits() {
+        return new CustomResponse(HttpStatus.OK, CustomMessages.VALUE_PREPARED, await this.unitService.find());
     }
 }

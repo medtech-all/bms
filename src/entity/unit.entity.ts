@@ -1,4 +1,4 @@
-import { Column, Unique, PrimaryGeneratedColumn, Entity, OneToMany, ManyToMany, OneToOne } from "typeorm"
+import { Column, Unique, PrimaryGeneratedColumn, Entity, OneToMany, ManyToMany, OneToOne, ManyToOne } from "typeorm"
 import { IsOptional, IsEmail, IsNotEmpty, MaxLength } from "class-validator"
 import { BaseEntity } from "src/shared/Crud/entity/base.entity"
 import { User } from "./user.entity"
@@ -31,7 +31,7 @@ export class Unit extends BaseEntity {
     @Column()
     owner: boolean
 
-    @ManyToMany(() => User, (user) => user.units)
+    @ManyToOne(() => User, (user) => user.units)
     user: User
 
     @OneToOne(() => UnitDetails, unitDetails => unitDetails.unitId)

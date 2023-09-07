@@ -8,7 +8,7 @@ import { User } from "./user.entity"
 @Unique(["buildingId"])
 export class Building extends BaseEntity {
 
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn("increment")
     buildingId: string
 
     @Column()
