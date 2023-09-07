@@ -7,9 +7,9 @@ import { Building } from 'src/entity/building.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Building])],
-    providers: [BuildingService, BuildingRepository],
+    providers: [BuildingService, BuildingRepository, { provide: "IBuildingRepository", useClass: BuildingRepository }],
     controllers: [BuildingController],
-    exports: [BuildingService]
+    exports: [BuildingService, "IBuildingRepository"]
 })
 export class BuildingModule {
 

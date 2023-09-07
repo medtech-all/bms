@@ -19,8 +19,9 @@ import { JwtModule } from '@nestjs/jwt';
         UserService,
         UserRepository,
         CurrentUserInterceptor,
-        { provide: "IUserService", useClass: UserService }
+        { provide: "IUserService", useClass: UserService },
+        { provide: "IUserRepository", useClass: UserRepository }
     ],
-    exports: [UserService, UserRepository, "IUserService"],
+    exports: [UserService, UserRepository, "IUserService", "IUserRepository"],
 })
 export class UserModule { }

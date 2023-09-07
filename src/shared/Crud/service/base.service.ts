@@ -1,18 +1,25 @@
+import { DeepPartial } from 'typeorm';
 import { BaseEntity } from '../entity/base.entity';
 import { IRepository } from '../repository/base.repository.interface';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export abstract class BaseService<T extends BaseEntity> {
     constructor(private readonly repository: IRepository<T>) { }
 
     async findAll(): Promise<T[]> {
-        return this.repository.findAll();
+        return this.repository.find();
     }
 
     async findById(id: string): Promise<T> {
         return this.repository.findById(id);
     }
 
-    async create(data: Partial<T>): Promise<T> {
+    async findOne(where: any): Promise<T> {
+        return await this.repository.findOne(where)
+    }
+
+    async create(data: DeepPartial<T>): Promise<T> {
         return this.repository.create(data);
     }
 
