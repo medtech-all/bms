@@ -13,6 +13,8 @@ import { BuildingModule } from './common/modules/building/building.module';
 import { UnitModule } from './common/modules/unit/unit.module';
 import { UnitDetailsModule } from './common/modules/unit-details/unit-details.module';
 import { CurrentUserInterceptor } from './common/interceptors/user/current-user.interceptor';
+import { JwtModule } from '@nestjs/jwt';
+import jwtConfig from './auth/config/jwt.config';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { CurrentUserInterceptor } from './common/interceptors/user/current-user.
     BuildingModule,
     UnitModule,
     UnitDetailsModule,
+    JwtModule.registerAsync(jwtConfig.asProvider()),
+    ConfigModule.forFeature(jwtConfig)
   ],
   controllers: [AppController],
   providers: [AppService,

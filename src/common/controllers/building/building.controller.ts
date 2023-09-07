@@ -4,6 +4,8 @@ import { JSendTransformInterceptor } from 'src/common/interceptors/JSendTransfor
 import { BuildingService } from 'src/common/providers/building/building.service';
 import { createBuildingDto } from 'src/common/dto/building/create-building.dto';
 import { ApiParam } from '@nestjs/swagger';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { User } from 'src/entity/user.entity';
 
 @Controller('building')
 @ApiTags("Building")
@@ -18,9 +20,15 @@ export class BuildingController {
     }
 
     @Post()
-    @UseInterceptors(JSendTransformInterceptor)
-    async createBuilding(@Body() createBuildingDto: createBuildingDto) {
-        return { data: await this.buildingService.create(createBuildingDto), status: "success", message: "value prepared" }
+    async createBuilding(
+        @Body() createBuildingDto: createBuildingDto,
+        @CurrentUser() currentUser: User
+    ) {
+        console.log(currentUser);
+
+        return null
+
+        // return { data: await this.buildingService.create(createBuildingDto), status: "success", message: "value prepared" }
     }
 
     @Get("/:buildingId")

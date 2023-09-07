@@ -12,20 +12,25 @@ export class Unit extends BaseEntity {
 
     @Column()
     @MaxLength(20)
+    @IsNotEmpty()
     name: string
 
     @Column()
     @MaxLength(20)
+    @IsNotEmpty()
     floorNo: string
 
     @Column()
+    @IsNotEmpty()
     buildingId: string
 
     @Column()
     @MaxLength(12)
+    @IsOptional()
     phone: string
 
     @Column()
+    @IsOptional()
     residentId: string
 
     @Column()
