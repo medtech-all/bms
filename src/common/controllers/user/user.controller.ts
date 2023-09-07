@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, BadRequestException, UseInterceptors, Session, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, BadRequestException, UseInterceptors, Session, Inject, HttpStatus, Param } from '@nestjs/common';
 import { IUserService } from 'src/common/interfaces/service/user.service.interface';
 import { CreateUserDto } from 'src/common/dto/user/create-user.dto';
 import { ApiTags, ApiExcludeEndpoint, ApiBearerAuth } from '@nestjs/swagger';
@@ -9,6 +9,8 @@ import { UserService } from 'src/common/providers/user/user.service';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { User } from 'src/entity/user.entity';
 import { AuthGuard } from 'src/common/guards/auth.guard';
+import CustomResponse from 'src/common/providers/custom-response/custom-response.service';
+import { CustomMessages } from 'src/common/constants/custom-messages';
 
 @ApiBearerAuth()
 @Controller('user')
@@ -33,6 +35,13 @@ export class UserController {
         @Session() session: any,
         @CurrentUser() currentUser: User
     ) {
-        return await this.userService.findAll()
+        return new CustomResponse(HttpStatus.OK, CustomMessages.VALUE_PREPARED, await this.userService.findAll());
+    }
+
+    @Post("/:userId")
+    @UseGuards(AuthGuard)
+    @UseInterceptors(new SerializeInterceptor(UserDto))
+    async getUser(@Param("userId") userId: string) {
+        return new CustomResponse(HttpStatus.OK, CustomMessages.VALUE_PREPARED, await this.userService.findById(userId));
     }
 }

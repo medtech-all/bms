@@ -47,7 +47,7 @@ export class AuthService {
     async login(username: string, password: string) {
         let user = await this.validateUser(username, password)
         if (!user) {
-            return { data: null, status: "failed", message: "Unauthorized" }
+            throw new CustomError(HttpStatus.BAD_REQUEST, 'Invalid login');
         }
 
         let token = await this.generateTokens(user)
